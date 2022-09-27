@@ -1,0 +1,5 @@
+$govuk-assets-path: '/assets/govuk/';
+$govuk-images-path: "/assets/govuk/images/";
+$govuk-fonts-path: "/assets/govuk/fonts/";
+
+@import "../../../../node_modules/govuk-frontend/govuk/all";

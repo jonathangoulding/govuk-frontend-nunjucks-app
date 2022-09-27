@@ -1,0 +1,42 @@
+{
+  "name": "govuk-frontend-nunjucks-app",
+  "version": "1.0.0",
+  "description": "A server side rendered frontend application using govuk-frontend, nunjucks and redis.",
+  "main": "index.js",
+  "scripts": {
+    "build:sass": "sass --update --style=expanded src/assets/sass:static/css",
+    "build:tsc": "tsc",
+    "serve": "ts-node src/app.ts",
+    "dev": "nodemon",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathangoulding/govuk-frontend-nunjucks-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jonathangoulding/govuk-frontend-nunjucks-app/issues"
+  },
+  "homepage": "https://github.com/jonathangoulding/govuk-frontend-nunjucks-app#readme",
+  "dependencies": {
+    "@types/nunjucks": "^3.2.1",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "govuk-frontend": "^4.3.1",
+    "nunjucks": "^3.2.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.7.23",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "eslint": "^8.22.0",
+    "nodemon": "^2.0.20",
+    "sass": "^1.55.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.3"
+  }
+}
