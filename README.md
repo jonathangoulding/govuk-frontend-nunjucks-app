@@ -9,7 +9,7 @@ npm install ci
 npm run build:sass
 ```
 
-## Dev
+## Dev
 ```bash
 npm run dev
 ```
