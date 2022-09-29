@@ -1,20 +1,20 @@
 interface GDSError {
-    text: string
-    href: string
+  text: string
+  href: string
 }
 
-interface pageObject {
-    id: string
-    value: string
-    errorMessage: GDSError | boolean
+interface PageObject {
+  id: string
+  value: string
+  errorMessage: GDSError | boolean
 }
 
-interface pageObjects {
-    [key: string]: pageObject
+interface PageObjects {
+  [key: string]: PageObject
 }
 
 export {
-    GDSError,
-    pageObject,
-    pageObjects
-}
+  GDSError,
+  PageObject,
+  PageObjects,
+};

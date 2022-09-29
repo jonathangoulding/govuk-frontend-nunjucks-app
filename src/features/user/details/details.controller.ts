@@ -1,46 +1,48 @@
-import {Request, Response} from "express";
-import {validateBody} from "./details.validatior";
-import {pageObject, pageObjects} from "../../../shared/types";
-import {mapBodyToPageObject} from "../../../shared/utils";
+import { Request, Response } from 'express';
+import { validateBody } from './details.validator';
+import { PageObject, PageObjects } from '../../../shared/types';
+import { mapBodyToPageObject } from '../../../shared/utils';
 
-const firstName: pageObject = {
-    id: 'firstName',
-    value: '',
-    errorMessage: false
-}
+const firstName: PageObject = {
+  id: 'firstName',
+  value: '',
+  errorMessage: false,
+};
 
-const lastName: pageObject = {
-    id: 'lastName',
-    value: '',
-    errorMessage: false
-}
+const lastName: PageObject = {
+  id: 'lastName',
+  value: '',
+  errorMessage: false,
+};
 
-const pageObject: pageObjects = {
-    firstName,
-    lastName
-}
+const pageObject: PageObjects = {
+  firstName,
+  lastName,
+};
 
 const renderPage = (res: Response, body: any) => {
-    return res.render('user/details/views/index.njk', body);
-}
+  return res.render('user/details/views/index.njk', body);
+};
 
 const get = (req: Request, res: Response) => {
-    renderPage(res, pageObject)
-}
+  renderPage(res, pageObject);
+};
 
 const post = (req: Request, res: Response) => {
-    const {body} = req;
-    const postPageObjects: pageObjects = mapBodyToPageObject(body, structuredClone(pageObject))
+  const { body } = req;
+  const postPageObjects: PageObjects = mapBodyToPageObject(body, structuredClone(pageObject));
 
-    const validatedPageObject = validateBody(postPageObjects, body)
+  const { validatedPageObjects, summaryErrors } = validateBody(postPageObjects, body);
 
-    if (validatedPageObject.summaryErrors.length > 0) {
-        return renderPage(res, {summaryErrors: validatedPageObject.summaryErrors, ...validatedPageObject.pageObjects})
-    }
-    return res.redirect('/')
-}
+  console.log('Summary errors: ', summaryErrors);
+  
+  if (summaryErrors.length > 0) {
+    return renderPage(res, { ...validatedPageObjects, summaryErrors });
+  }
+  return res.redirect('/');
+};
 
 export {
-    get,
-    post,
+  get,
+  post,
 };

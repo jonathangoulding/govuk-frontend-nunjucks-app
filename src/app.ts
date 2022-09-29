@@ -1,8 +1,8 @@
-import express from "express";
-import dotenv from "dotenv";
-import configureNunjucks from "./server/configureNunjucks";
-import configureStaticAssets from "./server/configureStaticAssets";
-import { mainRouter } from "./server/mainRouter";
+import express from 'express';
+import dotenv from 'dotenv';
+import configureNunjucks from './server/configureNunjucks';
+import configureStaticAssets from './server/configureStaticAssets';
+import { mainRouter } from './server/mainRouter';
 
 dotenv.config();
 
@@ -14,7 +14,7 @@ app.use(express.urlencoded());
 
 configureNunjucks(app);
 configureStaticAssets(app);
-mainRouter(app)
+mainRouter(app);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);

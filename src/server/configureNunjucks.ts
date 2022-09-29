@@ -1,6 +1,6 @@
-import express from "express";
-import nunjucks from "nunjucks";
-import path from "path";
+import express from 'express';
+import nunjucks from 'nunjucks';
+import path from 'path';
 
 export = (app: express.Application) => {
   nunjucks.configure(
@@ -12,6 +12,6 @@ export = (app: express.Application) => {
     {
       autoescape: true,
       express: app,
-    }
+    },
   );
 };

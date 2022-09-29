@@ -1,9 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-const get = (req: Request, res: Response) => {
-  const title = 'Hello Template';
-  res.render('landing/views/index.njk', { title });
-}
+const get = (req: Request, res: Response) => res.render('landing/views/index.njk');
 
 export {
   get,
