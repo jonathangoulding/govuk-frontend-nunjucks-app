@@ -8,6 +8,11 @@ const mapBodyToPageObject = (body: any, pageObjects: PageObjects): PageObjects =
   return pageObj;
 };
 
+const generateSummaryOfErrors = (pageObjects: PageObjects) => Object.keys(pageObjects)
+  .map(key => pageObjects[key].errorMessage)
+  .filter(error => !!error);
+
 export {
   mapBodyToPageObject,
+  generateSummaryOfErrors,
 };

@@ -1,9 +1,6 @@
 import { PageObjects } from '../../../shared/types';
+import { generateSummaryOfErrors } from '../../../shared/utils';
 
-
-const generateSummaryOfErrors = (pageObjects: PageObjects) => Object.keys(pageObjects)
-  .map(key => pageObjects[key].errorMessage)
-  .filter(error => !!error);
 
 const addErrorsToPageObjectIfPresent = (pageObjects: PageObjects, body: { firstName: string; lastName: string; }) => {
   const validatePageObject = structuredClone(pageObjects);
