@@ -3,7 +3,7 @@ import { PageObjects } from '../../../shared/types';
 
 const generateSummaryOfErrors = (pageObjects: PageObjects) => Object.keys(pageObjects)
   .map(key => pageObjects[key].errorMessage)
-  .filter(error => error !== false);
+  .filter(error => !!error);
 
 const addErrorsToPageObjectIfPresent = (pageObjects: PageObjects, body: { firstName: string; lastName: string; }) => {
   const validatePageObject = structuredClone(pageObjects);

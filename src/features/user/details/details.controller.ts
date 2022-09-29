@@ -33,8 +33,6 @@ const post = (req: Request, res: Response) => {
   const postPageObjects: PageObjects = mapBodyToPageObject(body, structuredClone(pageObject));
 
   const { validatedPageObjects, summaryErrors } = validateBody(postPageObjects, body);
-
-  console.log('Summary errors: ', summaryErrors);
   
   if (summaryErrors.length > 0) {
     return renderPage(res, { ...validatedPageObjects, summaryErrors });
