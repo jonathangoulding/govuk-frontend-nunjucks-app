@@ -33,6 +33,7 @@ const post = (req: Request, res: Response) => {
   const pageObjectWithValue: PageObjects = mapBodyToPageObject(body, pageObjects);
   const { validatedPageObjects, summaryErrors } = validateBody(pageObjectWithValue, body);
 
+  //  will commit values with errors
   if (req.session) req.session[sessionKey] = { pageObjects: pageObjectWithValue };
 
   if (summaryErrors.length > 0) {
