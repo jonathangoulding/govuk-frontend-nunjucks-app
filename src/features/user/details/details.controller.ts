@@ -1,41 +1,42 @@
 import { Request, Response } from 'express';
 import { validateBody } from './details.validator';
-import { PageObject, PageObjects } from '../../../shared/types';
+import { PageObjects } from '../../../shared/types';
 import { mapBodyToPageObject } from '../../../shared/utils';
 
-const firstName: PageObject = {
-  id: 'firstName',
-  value: '',
-  errorMessage: false,
-};
-
-const lastName: PageObject = {
-  id: 'lastName',
-  value: '',
-  errorMessage: false,
-};
-
-const pageObject: PageObjects = {
-  firstName,
-  lastName,
-};
-
-const renderPage = (res: Response, body: any) => {
-  return res.render('user/details/views/index.njk', body);
-};
+const sessionKey = 'user-details';
+const viewFile = 'user/details/views/index.njk';
 
 const get = (req: Request, res: Response) => {
-  renderPage(res, pageObject);
+  if (req.session) {
+    let pageObjects = { };
+    if (req.session[sessionKey] && req.session['user-details'].pageObjects) {
+      pageObjects = structuredClone(req.session['user-details'].pageObjects);
+    }
+    return res.render(viewFile, { ...pageObjects });
+  }
 };
 
 const post = (req: Request, res: Response) => {
   const { body } = req;
-  const postPageObjects: PageObjects = mapBodyToPageObject(body, structuredClone(pageObject));
 
-  const { validatedPageObjects, summaryErrors } = validateBody(postPageObjects, body);
-  
+  const pageObjects: PageObjects = {
+    firstName: {
+      value: '',
+      errorMessage: false,
+    },
+    lastName: {
+      value: '',
+      errorMessage: false,
+    },
+  };
+
+  const pageObjectWithValue: PageObjects = mapBodyToPageObject(body, pageObjects);
+  const { validatedPageObjects, summaryErrors } = validateBody(pageObjectWithValue, body);
+
+  if (req.session) req.session[sessionKey] = { pageObjects: pageObjectWithValue };
+
   if (summaryErrors.length > 0) {
-    return renderPage(res, { ...validatedPageObjects, summaryErrors });
+    return res.render(viewFile, { ...validatedPageObjects, summaryErrors });
   }
   return res.redirect('/');
 };

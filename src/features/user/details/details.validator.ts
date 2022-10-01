@@ -2,8 +2,8 @@ import { PageObjects } from '../../../shared/types';
 import { generateSummaryOfErrors } from '../../../shared/utils';
 
 
-const addErrorsToPageObjectIfPresent = (pageObjects: PageObjects, body: { firstName: string; lastName: string; }) => {
-  const validatePageObject = structuredClone(pageObjects);
+const addErrorsToPageObjectIfPresent = (pageObjects: PageObjects, body: any) => {
+  const validatePageObject = pageObjects;
   if (body.firstName === '') {
     validatePageObject.firstName.errorMessage = { text: 'First name is required', href: '#firstName' };
   }
@@ -13,8 +13,8 @@ const addErrorsToPageObjectIfPresent = (pageObjects: PageObjects, body: { firstN
   return validatePageObject;
 };
 
-const validateBody = (pageObjects: PageObjects, body: { firstName: string; lastName: string; }) => {
-  const validatedPageObjects: PageObjects = addErrorsToPageObjectIfPresent(pageObjects, body);
+const validateBody = (pageObjects: PageObjects, body: any) => {
+  const validatedPageObjects: PageObjects = addErrorsToPageObjectIfPresent(structuredClone(pageObjects), body);
   const summaryErrors = generateSummaryOfErrors(validatedPageObjects);
 
   return {

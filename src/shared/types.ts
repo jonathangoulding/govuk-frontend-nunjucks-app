@@ -4,7 +4,6 @@ interface GDSError {
 }
 
 interface PageObject {
-  id: string
   value: string
   errorMessage: GDSError | boolean
 }

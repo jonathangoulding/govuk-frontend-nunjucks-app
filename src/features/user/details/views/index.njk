@@ -3,63 +3,63 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
-        {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
 
 
 {% block beforeContent %}
-    {{ govukBackLink({
-        text: "Back"
-    }) }}
+{{ govukBackLink({
+text: "Back"
+}) }}
 {% endblock %}
 
 {% block content %}
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            {{ govukFieldset({
-                legend: {
-                    text: "What are your details?",
-                    classes: "govuk-fieldset__legend--l",
-                    isPageHeading: true
-                }
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        {{ govukFieldset({
+        legend: {
+        text: "What are your details?",
+        classes: "govuk-fieldset__legend--l",
+        isPageHeading: true
+        }
+        }) }}
+
+        {% if summaryErrors.length > 0 %}
+        {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: summaryErrors
+        }) }}
+        {% endif %}
+
+        <form action="/user-details" method="post" novalidate>
+
+            {{ govukInput({
+            label: {
+            text: "First name"
+            },
+            id: "firstName",
+            name: "firstName",
+            value: firstName.value,
+            autocomplete: "name",
+            spellcheck: false,
+            errorMessage: firstName.errorMessage
             }) }}
 
-            {% if summaryErrors.length > 0 %}
-                {{ govukErrorSummary({
-                    titleText: "There is a problem",
-                    errorList: summaryErrors
-                }) }}
-            {% endif %}
+            {{ govukInput({
+            label: {
+            text: "Last name"
+            },
+            id: "lastName",
+            name: "lastName",
+            value: lastName.value,
+            autocomplete: "name",
+            spellcheck: false,
+            errorMessage: lastName.errorMessage
+            }) }}
 
-            <form action="/user-details" method="post" novalidate>
-
-                {{ govukInput({
-                    label: {
-                        text: "First name"
-                    },
-                    id: "firstName",
-                    name: "firstName",
-                    value: firstName.value,
-                    autocomplete: "name",
-                    spellcheck: false,
-                    errorMessage: firstName.errorMessage
-                }) }}
-
-                {{ govukInput({
-                    label: {
-                        text: "Last name"
-                    },
-                    id: "lastName",
-                    name: "lastName",
-                    value: lastName.value,
-                    autocomplete: "name",
-                    spellcheck: false,
-                    errorMessage: lastName.errorMessage
-                }) }}
-
-                {{ govukButton({
-                    text: "Continue"
-                }) }}
-            </form>
-        </div>
+            {{ govukButton({
+            text: "Continue"
+            }) }}
+        </form>
     </div>
+</div>
 {% endblock %}
