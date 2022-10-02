@@ -35,7 +35,6 @@ const handlePersonalDetails = (session) => {
       }
     }
   }
-
   return personalDetailsSummaryList;
 };
 
