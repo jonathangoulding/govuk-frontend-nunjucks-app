@@ -2,17 +2,17 @@ import { Request, Response } from 'express';
 import { validateBody } from './details.validator';
 import { PageObjects } from '../../../shared/types';
 import { mapBodyToPageObject } from '../../../shared/utils';
+import { PERSONAL_DETAILS_KEY } from '../../../shared/keys';
 
-const sessionKey = 'user-details';
 const viewFile = 'user/details/views/index.njk';
 
 const get = (req: Request, res: Response) => {
   if (req.session) {
     let pageObjects = { };
-    if (req.session[sessionKey] && req.session['user-details'].pageObjects) {
-      pageObjects = structuredClone(req.session['user-details'].pageObjects);
+    if (req.session[PERSONAL_DETAILS_KEY] && req.session[PERSONAL_DETAILS_KEY].pageObjects) {
+      pageObjects = req.session[PERSONAL_DETAILS_KEY].pageObjects;
     }
-    return res.render(viewFile, { ...pageObjects });
+    return res.render(viewFile, { ...pageObjects, ButtonAction: PERSONAL_DETAILS_KEY });
   }
 };
 
@@ -22,10 +22,12 @@ const post = (req: Request, res: Response) => {
   const pageObjects: PageObjects = {
     firstName: {
       value: '',
+      label: 'First name',
       errorMessage: false,
     },
     lastName: {
       value: '',
+      label: 'Last name',
       errorMessage: false,
     },
   };
@@ -34,12 +36,12 @@ const post = (req: Request, res: Response) => {
   const { validatedPageObjects, summaryErrors } = validateBody(pageObjectWithValue, body);
 
   //  will commit values with errors
-  if (req.session) req.session[sessionKey] = { pageObjects: pageObjectWithValue };
+  if (req.session) req.session[PERSONAL_DETAILS_KEY] = { pageObjects: pageObjectWithValue };
 
   if (summaryErrors.length > 0) {
     return res.render(viewFile, { ...validatedPageObjects, summaryErrors });
   }
-  return res.redirect('/');
+  return res.redirect('/check-answers');
 };
 
 export {

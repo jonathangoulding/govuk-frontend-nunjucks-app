@@ -30,8 +30,7 @@ text: "Back"
         }) }}
         {% endif %}
 
-        <form action="/user-details" method="post" novalidate>
-
+        <form action="{{ButtonAction}}" method="post" novalidate>
             {{ govukInput({
             label: {
             text: "First name"
