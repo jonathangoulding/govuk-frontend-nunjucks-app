@@ -35,13 +35,16 @@ const post = (req: Request, res: Response) => {
   const pageObjectWithValue: PageObjects = mapBodyToPageObject(body, pageObjects);
   const { validatedPageObjects, summaryErrors } = validateBody(pageObjectWithValue, body);
 
-  //  will commit values with errors
-  if (req.session) req.session[PERSONAL_DETAILS_KEY] = { pageObjects: pageObjectWithValue };
-
   if (summaryErrors.length > 0) {
     return res.render(viewFile, { ...validatedPageObjects, summaryErrors });
   }
-  return res.redirect('/check-answers');
+
+  if (req.session) {
+    req.session[PERSONAL_DETAILS_KEY] = { pageObjects: pageObjectWithValue };
+    return res.redirect('/check-answers');
+  }
+
+
 };
 
 export {
