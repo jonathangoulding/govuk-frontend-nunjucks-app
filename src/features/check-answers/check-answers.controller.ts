@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Request, Response } from 'express';
-import { PERSONAL_DETAILS_KEY } from '../../shared/keys';
+import { FILE_UPLOAD_KEY, PERSONAL_DETAILS_KEY } from '../../shared/keys';
 import { SummaryItem } from '../../shared/types';
 
 const viewFile = 'check-answers/views/index.njk';
@@ -38,11 +38,46 @@ const handlePersonalDetails = (session) => {
   return personalDetailsSummaryList;
 };
 
+const handleFileUpload = (session) => {
+  const personalDetailsSummaryList: SummaryItem[] = [];
+  if (session[FILE_UPLOAD_KEY] && session[FILE_UPLOAD_KEY].pageObjects) {
+    const pageObjects = session[FILE_UPLOAD_KEY].pageObjects;
+
+    if (pageObjects !== false) {
+      personalDetailsSummaryList.push({
+        key: {
+          text: 'File name',
+        },
+        value: {
+          text: pageObjects.originalname,
+        },
+        actions: {
+          items: [
+            {
+              href: `${FILE_UPLOAD_KEY}/${pageObjects.filename}/download`,
+              text: 'View',
+              visuallyHiddenText: 'name',
+            },
+            {
+              href: `${FILE_UPLOAD_KEY}/${pageObjects.filename}`,
+              text: 'Delete',
+              visuallyHiddenText: 'name',
+            },
+          ],
+        },
+      });
+    }
+  }
+  return personalDetailsSummaryList;
+};
+
 const get = (req: Request, res: Response) => {
   if (req.session) {
     const { session } = req;
     const personalDetailsSummaryList = handlePersonalDetails(session);
-    return res.render(viewFile, { personalDetailsSummaryList });
+
+    const fileUploadSummaryList = handleFileUpload(session);
+    return res.render(viewFile, { personalDetailsSummaryList, fileUploadSummaryList });
   }
 };
 

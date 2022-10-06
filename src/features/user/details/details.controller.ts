@@ -41,7 +41,7 @@ const post = (req: Request, res: Response) => {
 
   if (req.session) {
     req.session[PERSONAL_DETAILS_KEY] = { pageObjects: pageObjectWithValue };
-    return res.redirect('/check-answers');
+    return res.redirect('/file-upload');
   }
 };
 

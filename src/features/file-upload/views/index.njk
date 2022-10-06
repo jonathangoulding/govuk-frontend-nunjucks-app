@@ -1,0 +1,29 @@
+{% extends "layouts/main.njk" %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+
+{% block beforeContent %}
+    {{ govukBackLink({
+        text: "Back"
+    }) }}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form action="" enctype="multipart/form-data" method="post">
+                {{ govukFileUpload({
+                    id: "documents",
+                    name: "documents",
+                    label: {
+                        text: "Upload a file"
+                    }
+                }) }}
+                {{ govukButton({
+                    text: "Continue"
+                }) }}
+            </form>
+        </div>
+    </div>
+{% endblock %}

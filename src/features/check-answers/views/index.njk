@@ -4,40 +4,49 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block beforeContent %}
-{{ govukBackLink({
-text: "Back",
-href: "#"
-}) }}
+    {{ govukBackLink({
+        text: "Back",
+        href: "#"
+    }) }}
 {% endblock %}
 
 {% block content %}
-<div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
 
-        <h1 class="govuk-heading-l">Check your answers before sending your application</h1>
+            <h1 class="govuk-heading-l">Check your answers before sending your application</h1>
 
-        <h2 class="govuk-heading-m">Personal details</h2>
+            <h2 class="govuk-heading-m">Personal details</h2>
 
-        {{ govukSummaryList({
-        classes: 'govuk-!-margin-bottom-9',
-        rows: personalDetailsSummaryList
-        }) }}
-
-        <h2 class="govuk-heading-m">Now send your application</h2>
-
-        <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge, the
-            details you are providing are correct.</p>
-
-        <form action="/form-handler" method="post" novalidate>
-
-            <input type="hidden" name="answers-checked" value="true">
-
-            {{ govukButton({
-            text: "Accept and send"
+            {{ govukSummaryList({
+                classes: 'govuk-!-margin-bottom-9',
+                rows: personalDetailsSummaryList
             }) }}
 
-        </form>
+            {% if fileUploadSummaryList.length > 0 %}
+                <h2 class="govuk-heading-m">Files uploaded</h2>
+                {{ govukSummaryList({
+                    classes: 'govuk-!-margin-bottom-9',
+                    rows: fileUploadSummaryList
+                }) }}
+            {% endif %}
 
+            <h2 class="govuk-heading-m">Now send your application</h2>
+
+            <p class="govuk-body">By submitting this application you are confirming that, to the best of your knowledge,
+                the
+                details you are providing are correct.</p>
+
+            <form action="/form-handler" method="post" novalidate>
+
+                <input type="hidden" name="answers-checked" value="true">
+
+                {{ govukButton({
+                    text: "Accept and send"
+                }) }}
+
+            </form>
+
+        </div>
     </div>
-</div>
 {% endblock %}
